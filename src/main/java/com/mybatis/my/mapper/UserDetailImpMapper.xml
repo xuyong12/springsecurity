@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.my.mapper.UserDetailImpMapper">
+    <resultMap id="BaseResultMap" type="com.mybatis.my.bean.UserDetailImp">
+        <collection property="user" ofType="com.mybatis.my.bean.User">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="name" property="name" jdbcType="VARCHAR"/>
+            <result column="password" property="password" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="roles" ofType="com.mybatis.my.bean.Role">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="role" property="role" jdbcType="VARCHAR" />
+            <result column="describe" property="describe" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <select id="selectDetailByUserName" resultMap="BaseResultMap">
+        select s.*,r.* from s_user s left join s_user_role ur on s.id=ur.fk_user_id left join s_role r on ur.fk_role_id=r.id where s.name=#{name}
+    </select>
+</mapper>
